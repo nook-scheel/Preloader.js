@@ -11,22 +11,40 @@ else {
 describe('Preloader.js', function(){
   describe('#Preloader()', function(){
     // Preloader init
-    var preloader = Preloader(['http://localhost/', 'http://localhost/']);
+    var preloader = Preloader(['http://localhost:3000/image', 'http://localhost:3000/image']);
     
     it('should return a preloader object', function() {
-      assert.typeOf( {tea: 'chai'}, 'object', 'we have an object' );
+      assert.typeOf( preloader, 'object', 'we have an object' );
     });
 
     it('should return a list array', function() {
       assert.isArray( preloader.list(), 'we have an array' );
     });
 
-    it('should return true if contains element', function() {
-      assert.isTrue( preloader.start(0), 'in the list' );
+    it('should stop loading image', function(done) {
+      this.timeout(10000);
+      preloader.start(0, function(err, event) {
+        assert.isNull(err, 'there was no error');
+      });
+
+      preloader.stop(0, function(err, event) {
+        assert.isNull(err, 'there was no error');
+        done();
+      });
     });
 
-    it('should return false if not contains element', function() {
-      assert.isFalse( preloader.start(2), 'is not in the list' );
+    it('should load the image and call callback', function(done) {
+      preloader.start(1, function(err, event) {
+        assert.isNull(err, 'there was no error');
+        done();
+      });
     });
-  })
-})
+
+    it('should callback return err if not contains element', function(done) {
+      preloader.start(2, function(err, event) {
+        assert.equal(err, 'Not list', 'is not in the list');
+        done();
+      });
+    });
+  });
+});
