@@ -11,7 +11,7 @@ else {
 describe('Preloader.js', function(){
   describe('#Preloader()', function(){
     // Preloader init
-    var preloader = Preloader(['http://localhost:3000/image', 'http://localhost:3000/image']);
+    var preloader = Preloader(['http://afisha.mail.ru/ext/pic/423880/', 'http://pumpkincorp.com/image']);
     
     it('should return a preloader object', function() {
       assert.typeOf( preloader, 'object', 'we have an object' );
@@ -23,18 +23,18 @@ describe('Preloader.js', function(){
 
     it('should stop loading image', function(done) {
       this.timeout(10000);
-      preloader.start(0, function(err, event) {
-        assert.isNull(err, 'there was no error');
+      preloader.start(1, function(err, event) {
+        assert.equal(err, 'File not found', 'there was no error');
       });
 
-      preloader.stop(0, function(err, event) {
+      preloader.stop(1, function(err, event) {
         assert.isNull(err, 'there was no error');
         done();
       });
     });
 
     it('should load the image and call callback', function(done) {
-      preloader.start(1, function(err, event) {
+      preloader.start(0, function(err, event) {
         assert.isNull(err, 'there was no error');
         done();
       });
