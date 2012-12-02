@@ -1,12 +1,4 @@
-// Support running the tests in a browser where we won't have `require`.
-if (typeof require === 'function') {
-  // We are running in Node.
-  var assert = require('chai').assert;
-}
-else {
-  // We are running in the browser.
-  var assert = chai.assert;
-}
+var assert = chai.assert;
 
 describe('Preloader.js', function(){
   describe('#Preloader()', function(){
